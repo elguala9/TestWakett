@@ -1,0 +1,75 @@
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+*.VC.db
+
+# Visual Studio Code settings
+.vscode/
+
+# Rider IDE settings
+.idea/
+*.sln.iml
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.old
+*.orig
+
+# Visual Studio config folders
+.vs/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# dotnet watch
+**/Properties/launchSettings.json
+
+# DotCover
+*.dotCover
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Coverlet coverage
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Reports
+*.report.xml
+
+# Publish results
+publish/
+*.Publish.xml
+*.publishproj
+
+# Others
+project.lock.json
+project.fragment.lock.json
+artifacts/

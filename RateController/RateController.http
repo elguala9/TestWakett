@@ -1,0 +1,6 @@
+@RateController_HostAddress = http://localhost:5021
+
+GET {{RateController_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

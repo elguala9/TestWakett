@@ -1,0 +1,88 @@
+
+version: "3.9"
+
+services:
+  postgres-rates:
+    image: postgres:15
+    container_name: postgres-rates
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: rates_db
+    volumes:
+      - rates_db_data:/var/lib/postgresql/data
+      - ./sql/rates:/docker-entrypoint-initdb.d
+    networks:
+      - custom_network
+
+  postgres-positions:
+    image: postgres:15
+    container_name: postgres-positions
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: positions_db
+    volumes:
+      - positions_db_data:/var/lib/postgresql/data
+      - ./sql/positions:/docker-entrypoint-initdb.d
+    networks:
+      - custom_network
+
+  rate-controller:
+    build:
+      context: .
+      dockerfile: RateController/Dockerfile
+    container_name: rate-controller
+    ports:
+      - "8001:8080"
+    depends_on:
+      - postgres-rates
+    networks:
+      - custom_network
+
+  position-controller:
+    build:
+      context: .
+      dockerfile: PositionController/Dockerfile
+    container_name: position-controller
+    ports:
+      - "8002:8080"
+    depends_on:
+      - postgres-positions
+    networks:
+      - custom_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5550:80"
+    depends_on:
+      - postgres-rates
+      - postgres-positions
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - custom_network
+
+volumes:
+  rates_db_data:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  positions_db_data:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  pgadmin_data:
+
+networks:
+  custom_network:
